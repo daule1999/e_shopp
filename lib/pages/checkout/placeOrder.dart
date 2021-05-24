@@ -1,6 +1,6 @@
 import '../../services/userService.dart';
 import 'package:flutter/material.dart';
-
+import "../../components/loader.dart";
 import '../../components/checkout/checkoutAppBar.dart';
 import '../../services/checkoutService.dart';
 import '../../components/modals/internetConnection.dart';
@@ -11,6 +11,9 @@ class PlaceOrder extends StatefulWidget {
 }
 
 class _PlaceOrderState extends State<PlaceOrder> {
+  final GlobalKey<ScaffoldState> _orderScaffoldKey =
+      new GlobalKey<ScaffoldState>();
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
   void thirdFunction() {}
   Map<String, dynamic> orderDetails;
   CheckoutService _checkoutService = new CheckoutService();
@@ -23,12 +26,32 @@ class _PlaceOrderState extends State<PlaceOrder> {
     });
   }
 
+  void showInSnackBar(String msg, Color color) {
+    // ignore: deprecated_member_use
+    _orderScaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        backgroundColor: color,
+        content: new Text(msg),
+        action: SnackBarAction(
+          label: 'Close',
+          textColor: Colors.white,
+          onPressed: () {
+            // ignore: deprecated_member_use
+            _orderScaffoldKey.currentState.removeCurrentSnackBar();
+          },
+        ),
+      ),
+    );
+  }
+
   placeNewOrder() async {
     bool connectionStatus = await _userService.checkInternetConnectivity();
 
     if (connectionStatus) {
+      Loader.showLoadingScreen(context, keyLoader);
       await _checkoutService.placeNewOrder(orderDetails);
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/success');
+      showInSnackBar("Order Placed", Colors.green);
     } else {
       internetConnectionDialog(context);
     }

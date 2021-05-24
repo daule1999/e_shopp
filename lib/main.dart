@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +23,7 @@ import './pages/products/wishlist.dart';
 import './components/orders/orderHistory.dart';
 import './pages/onBoardingScreen/onboardingScreen.dart';
 import './pages/adminPanel.dart';
+import "./components/successPage.dart";
 
 bool firstTime;
 
@@ -43,7 +43,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: firstTime ? '/' : '/onBoarding',
+      initialRoute: firstTime ? '/success' : '/onBoarding',
       routes: {
         '/': (context) => Start(),
         '/login': (context) => Login(),
@@ -66,7 +66,8 @@ class Main extends StatelessWidget {
         '/profile/contactUs': (context) => ContactUs(),
         '/placedOrder': (context) => OrderHistory(),
         "/onBoarding": (context) => OnBoardingScreen(),
-        "/admin": (context) => AdminPanel()
+        "/admin": (context) => AdminPanel(),
+        "/success": (context) => SuccesPage()
       },
       theme: ThemeData(
           bottomSheetTheme:

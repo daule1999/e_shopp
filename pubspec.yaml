@@ -50,6 +50,7 @@ dependencies:
   jwt_decode: ^0.3.1
   connectivity: ^3.0.4
   get: ^4.1.4
+  confetti: ^0.5.5
 
 dev_dependencies:
   flutter_test:
