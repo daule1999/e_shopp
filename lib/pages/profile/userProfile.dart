@@ -174,23 +174,23 @@ class _UserProfileState extends State<UserProfile> {
                   Icons.keyboard_arrow_right,
                   size: 35.0,
                 ),
-                onTap: () async {
-                  bool connectionStatus =
-                      await _userService.checkInternetConnectivity();
+                // onTap: () async {
+                //   bool connectionStatus =
+                //       await _userService.checkInternetConnectivity();
 
-                  if (connectionStatus) {
-                    Loader.showLoadingScreen(context, _keyLoader);
-                    QuerySnapshot userSettings =
-                        await _profileService.getUserSettings();
-                    Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                        .pop();
-                    Navigator.of(context).pushNamed('/profile/settings',
-                        arguments: userSettings.docs[0].data);
-                  } else {
-                    internetConnectionDialog(context);
-                  }
-                },
-              ),
+                //   if (connectionStatus) {
+                //     Loader.showLoadingScreen(context, _keyLoader);
+                //     QuerySnapshot userSettings =
+                //         await _profileService.getUserSettings();
+                //     Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                //         .pop();
+                //     Navigator.of(context).pushNamed('/profile/settings',
+                //         arguments: userSettings.docs[0].data);
+                //   } else {
+                //     internetConnectionDialog(context);
+                //   }
+                // },
+              ),S
               ListTile(
                 leading: Icon(
                   Icons.phone_in_talk,
@@ -205,9 +205,9 @@ class _UserProfileState extends State<UserProfile> {
                   Icons.keyboard_arrow_right,
                   size: 35.0,
                 ),
-                onTap: () async {
-                  Navigator.of(context).pushNamed('/profile/contactUs');
-                },
+                // onTap: () async {
+                //   Navigator.of(context).pushNamed('/profile/contactUs');
+                // },
               ),
               SizedBox(height: 60.0),
               ButtonTheme(
