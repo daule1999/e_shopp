@@ -190,7 +190,7 @@ class _UserProfileState extends State<UserProfile> {
                 //     internetConnectionDialog(context);
                 //   }
                 // },
-              ),S
+              ),
               ListTile(
                 leading: Icon(
                   Icons.phone_in_talk,
