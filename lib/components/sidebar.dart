@@ -153,6 +153,21 @@ Widget sidebar(BuildContext context) {
                 //     internetConnectionDialog(context);
                 //   }
                 // },
+                onTap: () async {
+                  bool connectionStatus =
+                      await _userService.checkInternetConnectivity();
+
+                  if (connectionStatus) {
+                    Loader.showLoadingScreen(context, _keyLoader);
+                    List userList = await _userService.userWishlist();
+                    Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                        .pop();
+                    Navigator.pushNamed(context, '/wishlist',
+                        arguments: {'userList': userList});
+                  } else {
+                    internetConnectionDialog(context);
+                  }
+                },
               ),
               ListTile(
                 leading: Icon(Icons.person),
