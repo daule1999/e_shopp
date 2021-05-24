@@ -53,7 +53,7 @@ class _ProductButtonsState extends State<ProductButtons> {
               },
               color: Colors.black,
               child: Text(
-                'Pay',
+                'Buy Now',
                 style: TextStyle(
                     fontFamily: 'NovaSquare',
                     fontSize: SizeConfig.safeBlockHorizontal * 5.0,

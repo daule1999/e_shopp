@@ -51,7 +51,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
       Loader.showLoadingScreen(context, keyLoader);
       await _checkoutService.placeNewOrder(orderDetails);
       Navigator.pushReplacementNamed(context, '/success');
-      showInSnackBar("Order Placed", Colors.green);
     } else {
       internetConnectionDialog(context);
     }

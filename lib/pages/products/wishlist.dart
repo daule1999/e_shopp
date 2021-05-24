@@ -102,7 +102,7 @@ class _WishListState extends State<WishList> {
                     args['category'] = categoryList;
                     Navigator.of(_keyLoader.currentContext, rootNavigator: true)
                         .pop();
-                    Navigator.pushReplacementNamed(context, '/shop',
+                    Navigator.pushReplacementNamed(context, '/home',
                         arguments: args);
                   } else {
                     internetConnectionDialog(context);

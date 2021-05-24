@@ -82,6 +82,11 @@ class _ShippingAddressState extends State<ShippingAddress> {
 
     if (connectionStatus) {
       List data = await _checkoutService.listShippingAddress();
+      List AddData;
+      // if (data.isEmpty) {
+      //   AddData = data;
+      // }
+      print(data);
       setState(() {
         shippingAddress = data;
       });
@@ -152,11 +157,11 @@ class _ShippingAddressState extends State<ShippingAddress> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            item['name'],
-                            style: TextStyle(
-                                fontSize: 17.0, fontWeight: FontWeight.bold),
-                          ),
+                          // Text(
+                          //   item['name'],
+                          //   style: TextStyle(
+                          //       fontSize: 17.0, fontWeight: FontWeight.bold),
+                          // ),
                           SizedBox(height: 5.0),
                           Text(
                             item['address'],

@@ -151,21 +151,66 @@ class _ParticularItemState extends State<ParticularItem> {
     );
   }
 
-  checkoutProduct() {
-    String selectedSize;
-    String selectedColor;
-    if (selectedSize == '' && productSizes.length != 0)
+  // checkoutProduct() {
+  //   String selectedSize;
+  //   String selectedColor;
+  //   if (selectedSize == '' && productSizes.length != 0)
+  //     showInSnackBar('Select size', Colors.red);
+  //   else if (selectedColor == '' && productColors.length != 0)
+  //     showInSnackBar('Select color', Colors.red);
+  //   else {
+  //     addToShoppingBag();
+  //     Map<String, dynamic> args = new Map<String, dynamic>();
+  //     args['price'] = widget.itemDetails['price'];
+  //     args['productId'] = widget.itemDetails['productId'];
+  //     args['quantity'] = productQuantity;
+  //     args['size'] = selectedSize;
+  //     args['color'] = selectedColor;
+  //     Navigator.of(context).pushNamed('/checkout/address', arguments: args);
+  //   }
+  // }
+  checkoutProduct() async {
+    String selectedSize = '';
+    String selectedColor = '';
+    if (productSizes.length > 0) {
+      for (Map size in productSizes) {
+        if (size.values.toList()[0]) selectedSize = size.keys.toList()[0];
+      }
+    } else {
+      selectedSize = "0";
+    }
+
+    if (productColors.length > 0) {
+      for (Map color in productColors) {
+        if (color.values.toList()[0])
+          selectedColor = color.toString().substring(11, 17);
+      }
+    } else {
+      selectedColor = ".";
+    }
+
+    if (selectedSize == '')
       showInSnackBar('Select size', Colors.red);
-    else if (selectedColor == '' && productColors.length != 0)
+    else if (selectedColor == '')
       showInSnackBar('Select color', Colors.red);
     else {
-      Map<String, dynamic> args = new Map<String, dynamic>();
-      args['price'] = widget.itemDetails['price'];
-      args['productId'] = widget.itemDetails['productId'];
-      args['quantity'] = productQuantity;
-      args['size'] = selectedSize;
-      args['color'] = selectedColor;
-      Navigator.of(context).pushNamed('/checkout/address', arguments: args);
+      bool connectionStatus = await _userService.checkInternetConnectivity();
+
+      if (connectionStatus) {
+        Map<String, dynamic> args = new Map<String, dynamic>();
+        Loader.showLoadingScreen(context, keyLoader);
+        String msg = await _shoppingBagService.add(
+            widget.itemDetails['productId'], selectedSize, selectedColor, 1);
+        print(msg);
+        args['price'] = widget.itemDetails['price'];
+        args['productId'] = widget.itemDetails['productId'];
+        args['quantity'] = productQuantity;
+        args['size'] = selectedSize;
+        args['color'] = selectedColor;
+        Navigator.of(context).pushNamed('/checkout/address', arguments: args);
+      } else {
+        internetConnectionDialog(context);
+      }
     }
   }
 
@@ -321,44 +366,50 @@ class _ParticularItemState extends State<ParticularItem> {
                                       letterSpacing: 1.0,
                                     ),
                                   ),
-                                  productColors.length > 0?Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            SizeConfig.safeBlockVertical * 1.2),
-                                    child: Center(
-                                      child: Text(
-                                        'Color',
-                                        style: TextStyle(
-                                            fontFamily: 'NovaSquare',
-                                            fontSize:
-                                                SizeConfig.safeBlockHorizontal *
-                                                    5,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ):SizedBox(height: 1),
+                                  productColors.length > 0
+                                      ? Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.safeBlockVertical *
+                                                      1.2),
+                                          child: Center(
+                                            child: Text(
+                                              'Color',
+                                              style: TextStyle(
+                                                  fontFamily: 'NovaSquare',
+                                                  fontSize: SizeConfig
+                                                          .safeBlockHorizontal *
+                                                      5,
+                                                  letterSpacing: 1.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(height: 1),
                                   productColors.length > 0
                                       ? ColorGroupButton(
                                           productColors, selectProductColor)
                                       : SizedBox(height: 1),
-                                  productSizes.length > 0?Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            SizeConfig.safeBlockVertical * 1.2),
-                                    child: Center(
-                                      child: Text(
-                                        'Size',
-                                        style: TextStyle(
-                                            fontFamily: 'NovaSquare',
-                                            fontSize:
-                                                SizeConfig.safeBlockHorizontal *
-                                                    5,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ): SizedBox(height: 1),
+                                  productSizes.length > 0
+                                      ? Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.safeBlockVertical *
+                                                      1.2),
+                                          child: Center(
+                                            child: Text(
+                                              'Size',
+                                              style: TextStyle(
+                                                  fontFamily: 'NovaSquare',
+                                                  fontSize: SizeConfig
+                                                          .safeBlockHorizontal *
+                                                      5,
+                                                  letterSpacing: 1.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(height: 1),
                                   productSizes.length > 0
                                       ? ProductSize(
                                           productSizes,

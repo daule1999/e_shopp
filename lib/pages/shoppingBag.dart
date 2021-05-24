@@ -181,7 +181,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
                     args['category'] = categoryList;
                     Navigator.of(_keyLoader.currentContext, rootNavigator: true)
                         .pop();
-                    Navigator.pushReplacementNamed(context, '/shop',
+                    Navigator.pushReplacementNamed(context, '/home',
                         arguments: args);
                   } else {
                     internetConnectionDialog(context);

@@ -43,7 +43,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: firstTime ? '/success' : '/onBoarding',
+      initialRoute: firstTime ? '/' : '/onBoarding',
       routes: {
         '/': (context) => Start(),
         '/login': (context) => Login(),

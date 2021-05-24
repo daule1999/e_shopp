@@ -74,8 +74,10 @@ class CheckoutService {
 
     QuerySnapshot docRef =
         await _shippingAddressReference.where('userId', isEqualTo: uid).get();
-    if (docRef.docs.length != 0) {
-      addressList = docRef.docs[0][0].data()['address'];
+    Map addresssList = docRef.docs[0].data();
+    // print(addresssList);
+    if (addresssList['address'].length != 0) {
+      addressList = addresssList['address'];
     }
     return addressList;
   }
